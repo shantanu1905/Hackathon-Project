@@ -13,8 +13,10 @@ class HomeListView(TemplateView):
     template_name = 'flood/home.html'
 
     def get_context_data(self, **kwargs):
-        m = folium.Map([21.124181852903053, 79.00303866845013], zoom_start=50)
+        m = folium.Map([21.1458, 79.0882],width=750, height=500, zoom_start=20)
+        folium.Marker([21.124181852903053, 79.00303866845013] , tooltip="click me" , popup="GHRIET").add_to(m)
         test = folium.Html('<b>Hello world</b>', script=True)
+
         popup = folium.Popup(test, max_width=2650)
         folium.RegularPolygonMarker(location=[51.5, -0.25], popup=popup).add_to(m)
         m=m._repr_html_() #updated
@@ -30,9 +32,16 @@ class HomeListView(TemplateView):
 class PhotoCreateView(LoginRequiredMixin, CreateView):
 
 
-    template_name = 'photoapp/create.html'
+    template_name = 'flood/create.html'
+    fields = ['title']
 
-    success_url = reverse_lazy('photo:list')  #Users will be redirected to the photo dashboard if the photo creation was successful.
+    success_url = reverse_lazy('flood:home')  #Users will be redirected to the photo dashboard if the photo creation was successful.
+
+    def post(self ,request):
+        my_data = request.POST
+        print(my_data)
+        return super(CreateView, self).render_to_response()
+
 
 
     def form_valid(self, form):

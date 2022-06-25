@@ -7,5 +7,6 @@ app_name = 'flood'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', HomeListView.as_view(), name='home'),
+    path('create', PhotoCreateView.as_view(), name='create'),
     
 ]

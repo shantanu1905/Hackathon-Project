@@ -144,6 +144,6 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 # Django Authentication
 LOGIN_URL = 'user:login'
-LOGIN_REDIRECT_URL = 'photo:list'
+LOGIN_REDIRECT_URL = 'flood:home'
 
-LOGOUT_REDIRECT_URL = 'photo:list'
+LOGOUT_REDIRECT_URL = 'flood:home'
