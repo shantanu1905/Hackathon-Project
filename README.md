@@ -6,4 +6,4 @@
 3. activate virtual environment 
 4. then open cmd and type **pip install -r requirements.txt**
 5. python manage.py runserver **(to run our server)**
-6. John Quincy Adams
+
