@@ -7,9 +7,9 @@ from django.contrib.auth.models import  BaseUserManager, AbstractBaseUser
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, name, password=None , password2=None):
+    def create_user(self, email, name,  contact, password=None , password2=None ,):
         """
-        Creates and saves a User with the given email, name and password.
+        Creates and saves a User with the given email, name and password , contact.
         """
         if not email:
             raise ValueError('Users must have an email address')
@@ -17,13 +17,14 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             name=name,
+            contact=contact,
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, name, password=None):
+    def create_superuser(self, email, contact, name, password=None):
         """
         Creates and saves a superuser with the given email, name and password.
         """
@@ -31,6 +32,7 @@ class UserManager(BaseUserManager):
             email,
             password=password,
             name=name,
+            contact=contact
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -50,6 +52,7 @@ class User(AbstractBaseUser):
         unique=True,
     )
     name = models.CharField(max_length=200)
+    contact = models.IntegerField(max_length=10)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -60,7 +63,7 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name']
+    REQUIRED_FIELDS = ['name' , 'contact']
 
     def __str__(self):
         return self.email     #user object will displayed using email
