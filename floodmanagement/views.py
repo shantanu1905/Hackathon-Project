@@ -8,6 +8,8 @@ from .models import *
 # Create your views here.
 import folium
 
+#{{ my_map|safe }}
+
 class HomeListView(TemplateView):
 
     template_name = 'flood/home.html'

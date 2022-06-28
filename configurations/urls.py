@@ -22,8 +22,9 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('authenticate/', include('users.urls')),
-    path('api/user/', include('api.urls')),
+    path('authenticate/', include('users.urls')),                           #base url for user auth frontend(website)
+    path('api/user/', include('api.urls')),                                 #base url for user api
+    path('api/floodmanagement/', include('api_floodmanagement.urls')),      #base url for floodmanagement api
 
     path('', include('floodmanagement.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),

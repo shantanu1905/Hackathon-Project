@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     "corsheaders",
     'users',
     'floodmanagement',
+    'api',
+    'api_floodmanagement',
     'crispy_forms',
     'rest_framework',
     'rest_framework_simplejwt',
-    'api',
+    
 ]
 
 MIDDLEWARE = [
