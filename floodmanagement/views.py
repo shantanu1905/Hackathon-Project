@@ -5,6 +5,8 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy  #is used in CBVs to redirect the users to a specific URL.
 from .models import *
+from api_floodmanagement.models import *
+from django.contrib.messages.views import SuccessMessageMixin
 # Create your views here.
 import folium
 
@@ -51,3 +53,12 @@ class PhotoCreateView(LoginRequiredMixin, CreateView):
         form.instance.submitter = self.request.user
 
         return super().form_valid(form)
+
+
+
+
+class Help_list(ListView):
+    model = UserHelpRequest
+
+    context_object_name = 'userlist'
+    template_name="webview/helpdesk.html"

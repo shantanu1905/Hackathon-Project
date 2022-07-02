@@ -23,6 +23,8 @@ from rest_framework_simplejwt.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('authenticate/', include('users.urls')),                           #base url for user auth frontend(website)
+    path('web/', include('webview.urls')),                           #base url for user auth frontend(website)
+
     path('api/user/', include('api.urls')),                                 #base url for user api
     path('api/floodmanagement/', include('api_floodmanagement.urls')),      #base url for floodmanagement api
 

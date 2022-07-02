@@ -9,5 +9,5 @@ class HelpSerializer(serializers.ModelSerializer):
     RequestStatus = models.CharField()
     class Meta:
         model = UserHelpRequest
-        fields = ['id', 'latitude', 'longitude','created', 'TypeOfEmergency' ,'owner' , 'RequestStatus']
+        fields = ['id', 'created_at' , 'updated_at' , 'latitude', 'longitude', 'TypeOfEmergency' ,'RequestStatus' ,'owner'  ]
         
