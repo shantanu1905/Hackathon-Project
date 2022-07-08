@@ -1,9 +1,5 @@
 from django.db import models
-from django.forms import JSONField
 from api.models import User
-
-
-
 # Create your models here.
 
 REQUEST_STATUS=(
@@ -30,10 +26,13 @@ class UserHelpRequest(models.Model):
     RequestStatus = models.CharField(max_length = 30,choices = REQUEST_STATUS,default = 'HELP ALERT SEND TO AUTHORITIES')
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     
-    def __str__(self):
-        return " %s Type of Emergency: %s" % (self.owner, self.TypeOfEmergency )
+    #def __str__(self):
+        #return self.owner
     class Meta:
         ordering = ['created_at']
+
+
+
 
 
 class Comment(models.Model):
@@ -47,3 +46,17 @@ class Comment(models.Model):
 
     def __str__(self):
         return "%s %s" % (self.owner, self.body )
+
+
+
+
+class CrowdSource(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    latitude = models.DecimalField(max_digits=19, decimal_places=16)
+    longitude = models.DecimalField(max_digits=19, decimal_places=16)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    #def __str__(self):
+        #return self.owner
+    class Meta:
+        ordering = ['created_at']

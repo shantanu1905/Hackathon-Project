@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy  #is used in CBVs to redirect the users to a specific URL.
 from .models import *
 from api_floodmanagement.models import *
+from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 # Create your views here.
 import folium
@@ -62,3 +63,10 @@ class Help_list(ListView):
 
     context_object_name = 'userlist'
     template_name="webview/helpdesk.html"
+
+
+def delete(request , UserHelpRequest_id):
+    item= UserHelpRequest.objects.get(pk=UserHelpRequest_id)
+    item.delete()
+    messages.success(request, 'User Request is Deleted')
+    return render(request , "flood/deleted_successfully.html")
