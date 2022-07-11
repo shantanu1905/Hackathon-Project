@@ -11,3 +11,10 @@ class HelpSerializer(serializers.ModelSerializer):
         model = UserHelpRequest
         fields = ['id', 'created_at' , 'updated_at' , 'latitude', 'longitude', 'TypeOfEmergency' ,'RequestStatus' ,'owner'  ]
         
+
+class CrowdSourceSerializer(serializers.ModelSerializer):
+    owner = serializers.CharField(read_only=True, default=serializers.CurrentUserDefault())
+    class Meta:
+        model = CrowdSource
+        fields = ['id', 'created_at' , 'latitude', 'longitude', 'category' , 'image' ,'owner'  ]
+        

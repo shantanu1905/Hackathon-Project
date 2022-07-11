@@ -25,10 +25,24 @@ class HomeListView(TemplateView):
         popup = folium.Popup(test, max_width=2650)
         folium.RegularPolygonMarker(location=[51.5, -0.25], popup=popup).add_to(m)
         m=m._repr_html_() #updated
+        
+        
+        image = CrowdSource.objects.all()
+        context_old = super().get_context_data(**kwargs)
+        context = { 'context_old':context_old , 'my_map': m , 'image':image}
+        return context
+
+class MapListView(TemplateView):
+
+    template_name = 'flood/maplocation.html'
+
+    def get_context_data(self, **kwargs):
+       
 
         name = 'shantanu'
+        data=CrowdSource.objects.all()
         context_old = super().get_context_data(**kwargs)
-        context = {'name':name , 'context_old':context_old , 'my_map': m}
+        context = {'name':name , 'context_old':context_old ,'x':data }
         return context
 
    

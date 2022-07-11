@@ -75,5 +75,13 @@
 
 
 
+{% for CrowdSource in image %}
+
+<img src="{{ CrowdSource.image.url}}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
+
+{{CrowdSource.latitude}}
+
+{% endfor %}
+
 
 {% endblock %}

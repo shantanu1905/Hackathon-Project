@@ -16,6 +16,22 @@ admin.site.register(Comment)
 
 
 class CrowdSourceOptions(admin.ModelAdmin):
-    list_display = ('owner' , 'created_at' )
+    list_display = ('owner' , 'category' , 'image' , 'created_at' , 'photo_tag' , 'Details' )
+    readonly_fields = ('photo_tag' , )
+
+    def photo_tag(self , obj):
+        return format_html(f'<img scr="/media/crowdsourcing/{obj.image}" class="img-responsive" style="width: 100px; hight: "/>')
+
+    def Details(self , obj):
+        return format_html(f'<a href = "/admin/api_floodmanagement/crowdsource/{obj.id}/change/" class="default"> View </a>')
+
+    def map_tag(self , obj):
+        return format_html(f'''
+        
+        <h1>shan<h1>
+        
+        
+        ''')
+
 
 admin.site.register(CrowdSource , CrowdSourceOptions)
