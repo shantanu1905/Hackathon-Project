@@ -7,10 +7,6 @@ from rest_framework.generics import (CreateAPIView,ListCreateAPIView,RetrieveUpd
 from api_floodmanagement.models import *
 from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer
 
-
-
-
-
 class HelpList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET USER data who are requesting for HELP and USER can also POST their data .
     queryset = UserHelpRequest.objects.all()
@@ -29,9 +25,10 @@ class HelpDetail(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         # we will filter data on basis of current user 
         return UserHelpRequest.objects.all().filter(owner=self.request.user)
+        
 
 
-class CrowdSource(ListCreateAPIView):
+class CrowdSourceList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET Crowdsource data and POST crowdsource data .
     queryset = CrowdSource.objects.all()
     serializer_class = CrowdSourceSerializer
@@ -39,6 +36,7 @@ class CrowdSource(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
 
 class CrowdSourceDetails(RetrieveUpdateDestroyAPIView):
     # With this endpoint we can perform PUT , DELETE , requests
@@ -48,3 +46,5 @@ class CrowdSourceDetails(RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         # we will filter data on basis of current user 
         return CrowdSource.objects.all().filter(owner=self.request.user)
+
+
