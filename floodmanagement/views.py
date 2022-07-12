@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
@@ -13,11 +14,14 @@ import folium
 
 #{{ my_map|safe }}
 
+from .task import *
+
 class HomeListView(TemplateView):
 
     template_name = 'flood/home.html'
 
     def get_context_data(self, **kwargs):
+       
         m = folium.Map([21.1458, 79.0882],width=750, height=500, zoom_start=20)
         folium.Marker([21.124181852903053, 79.00303866845013] , tooltip="click me" , popup="GHRIET").add_to(m)
         test = folium.Html('<b>Hello world</b>', script=True)
@@ -33,6 +37,7 @@ class HomeListView(TemplateView):
         return context
 
 class MapListView(TemplateView):
+    
 
     template_name = 'flood/maplocation.html'
 
@@ -84,3 +89,7 @@ def delete(request , UserHelpRequest_id):
     item.delete()
     messages.success(request, 'User Request is Deleted')
     return render(request , "flood/deleted_successfully.html")
+
+def sendmain(request):
+    send_mail_func.delay()
+    return HttpResponse('SEND  MAIL')

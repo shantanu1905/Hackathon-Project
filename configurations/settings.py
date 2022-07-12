@@ -40,14 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "corsheaders",
+    'django_celery_results',     #this module will show all task results regarding celery in admin panel
+    'django_celery_beat',        #This extension enables you to store the periodic task schedule in the database.
+    "corsheaders",         
     'users',
-    'floodmanagement',
+    'floodmanagement',        
     'api',
     'api_floodmanagement',
-    'crispy_forms',
-    'rest_framework',
-    'rest_framework_simplejwt',
+    'crispy_forms',               #this module is used to build interactive forms with bootstrap
+    'rest_framework',             #this module is used for api authentication
+    'rest_framework_simplejwt',   #this module is used for api authentication
     
 ]
 
@@ -230,12 +232,24 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 #SENDGRID_API_KEY= config('api_key')
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'apikey'
-#EMAIL_HOST_PASSWORD = config('password')
+
+DEFAULT_FROM_EMAIL = 'APP testing <floodmanagement@SIH.com>'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+# Celery settings
+CELERY_BROKER_URL='redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER='json'
+CELERY_TASK_SERIALIZER='json'
+CELERY_TIMEZONE='Asia/kolkata'
+CELERY_RESULT_BACKEND = 'django-db'
+
+#Celery BEAT Settings
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
