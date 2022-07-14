@@ -6,6 +6,6 @@ path('help/' , HelpList.as_view()  , name ='help' ) ,                      #to v
 path('helpdetails/<int:pk>/', HelpDetail.as_view() , name='HelpDetails'),      #to view userhelp details/update/delete
 path('crowdsource/' , CrowdSourceList.as_view()  , name ='CrowdSourceList' ) ,       #To view/post crowdsource data
 path('crowdsourcedetails/<int:pk>/', CrowdSourceDetails.as_view() , name='CrowdSourceDetails'),      #to view userhelp details/update/delete
-
+path('forcast/', ForcastList.as_view() , name='ForcastData'),      #to GET Forcast Data
 
 ]

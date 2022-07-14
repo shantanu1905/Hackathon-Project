@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',     #this module will show all task results regarding celery in admin panel
     'django_celery_beat',        #This extension enables you to store the periodic task schedule in the database.
-    "corsheaders",         
+    'django_filters',            #This module is used to filter query set
+    "corsheaders",               
     'users',
     'floodmanagement',        
     'api',
@@ -171,8 +172,11 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
       
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        
     ),
-   
+   'DEFAULT_FILTER_BACKENDS':(
+    'django_filters.rest_framework.DjangoFilterBackend'
+   )
   
 }
 
@@ -235,8 +239,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ['MAIL']
-EMAIL_HOST_PASSWORD = os.environ['PASSWORD']
+#EMAIL_HOST_USER = os.environ('MAIL')
+#EMAIL_HOST_PASSWORD = os.environ('PASSWORD')
 DEFAULT_FROM_EMAIL = 'APP testing <floodmanagement@SIH.com>'
 
 
@@ -244,8 +248,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 # localhost Celery settings
-CELERY_BROKER_URL= os.environ['REDIS_URL']     #celery redis production settings
-#CELERY_BROKER_URL='redis://127.0.0.1:6379'
+#CELERY_BROKER_URL= os.environ('REDIS_URL')     #celery redis production settings
+CELERY_BROKER_URL='redis://127.0.0.1:6379'
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER='json'
@@ -255,3 +259,4 @@ CELERY_RESULT_BACKEND = 'django-db'
 
 #Celery BEAT Settings
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
