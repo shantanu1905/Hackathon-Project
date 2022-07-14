@@ -235,16 +235,17 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'snimkar1905@gmail.com'
-EMAIL_HOST_PASSWORD = 'buugpxstzmjduinw'
+EMAIL_HOST_USER = os.environ['MAIL']
+EMAIL_HOST_PASSWORD = os.environ['PASSWORD']
 DEFAULT_FROM_EMAIL = 'APP testing <floodmanagement@SIH.com>'
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-# Celery settings
-CELERY_BROKER_URL='redis://127.0.0.1:6379'
+# localhost Celery settings
+CELERY_BROKER_URL= os.environ['REDIS_URL']     #celery redis production settings
+#CELERY_BROKER_URL='redis://127.0.0.1:6379'
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER='json'
