@@ -35,3 +35,14 @@ class CrowdSourceOptions(admin.ModelAdmin):
 
 
 admin.site.register(CrowdSource , CrowdSourceOptions)
+
+
+
+class ForcastOptions(admin.ModelAdmin):
+    list_display = ('Site_Name' , 'River' , 'State' , 'District' , 'Details')
+
+
+    def Details(self , obj):
+        return format_html(f'<a href = "/admin/api_floodmanagement/forcastdata/{obj.id}/change/" class="default"> View </a>')
+
+admin.site.register(ForcastData , ForcastOptions)

@@ -1,7 +1,7 @@
 import os
-
 from celery import Celery
 from pytz import timezone
+
 
 # Set the default Django settings module for the 'celery' program.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'configurations.settings')
@@ -24,6 +24,3 @@ app.conf.beat_schedule = {
 app.autodiscover_tasks()
 
 
-@app.task(bind=True)
-def debug_task(self):
-    print(f'Request: {self.request!r}')

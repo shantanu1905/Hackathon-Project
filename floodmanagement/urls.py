@@ -11,6 +11,8 @@ urlpatterns = [
     path('helplist/', Help_list.as_view(), name='helplist'),
     path('mapview/',  MapListView.as_view(), name='mapview'),
     path('mail/',  sendmain, name='sendmail'),
+    path('dump/',  datadump, name='datadump'),
+
 
 
 

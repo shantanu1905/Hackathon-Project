@@ -83,23 +83,23 @@ class ForcastData(models.Model):
 
     Day1=models.CharField(max_length=20)
     Flood_Condition1=models.CharField(max_length=20)
-    Max_WL1=models.DecimalField(max_digits=5, decimal_places=3)
+    Max_WL1=models.CharField(max_length=20)
 
     Day2=models.CharField(max_length=20)
     Flood_Condition2=models.CharField(max_length=20)
-    Max_WL2=models.DecimalField(max_digits=5, decimal_places=3)
+    Max_WL2=models.CharField(max_length=20)
 
     Day3=models.CharField(max_length=20)
     Flood_Condition3=models.CharField(max_length=20)
-    Max_WL3=models.DecimalField(max_digits=5, decimal_places=3)
+    Max_WL3=models.CharField(max_length=20)
 
     Day4=models.CharField(max_length=20)
     Flood_Condition4=models.CharField(max_length=20)
-    Max_WL4=models.DecimalField(max_digits=5, decimal_places=3)
+    Max_WL4=models.CharField(max_length=20)
 
     Day5=models.CharField(max_length=20)
     Flood_Condition5=models.CharField(max_length=20)
-    Max_WL5=models.DecimalField(max_digits=5, decimal_places=3)
+    Max_WL5=models.CharField(max_length=20)
 
    
 
