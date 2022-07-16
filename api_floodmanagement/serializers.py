@@ -16,7 +16,7 @@ class CrowdSourceSerializer(serializers.ModelSerializer):
     owner = serializers.CharField(read_only=True, default=serializers.CurrentUserDefault())
     class Meta:
         model = CrowdSource
-        fields = ['id', 'created_at' , 'latitude', 'longitude', 'category' , 'image' ,'owner'  ]
+        fields = ['id', 'created_at' , 'latitude', 'longitude', 'category' , 'image' , 'description','owner'  ]
         
 class ForcastSerializer(serializers.ModelSerializer):
     class Meta:

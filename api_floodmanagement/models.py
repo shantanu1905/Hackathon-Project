@@ -1,3 +1,4 @@
+from pydoc import describe
 from django.db import models
 from api.models import User
 
@@ -64,6 +65,7 @@ class CrowdSource(models.Model):
     latitude = models.DecimalField(max_digits=19, decimal_places=16)
     category = models.CharField(max_length=30, choices = CATEGORY ,default = 'Flood')
     image = models.ImageField(upload_to='crowdsourcing/')
+    description = models.TextField(blank=True)
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     

@@ -49,6 +49,16 @@ class CrowdSourceDetails(RetrieveUpdateDestroyAPIView):
         return CrowdSource.objects.all().filter(owner=self.request.user)
 
 
+class CrowdSourceListView(ListCreateAPIView):
+    # With this endpoint we can perform GET methode to get only loged in user data
+    permission_classes = [IsAuthenticated]
+    serializer_class = CrowdSourceSerializer
+
+    def get_queryset(self):
+        # we will filter data on basis of current user 
+        return CrowdSource.objects.all().filter(owner=self.request.user)
+
+
 class ForcastList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET Crowdsource data and POST crowdsource data .
     serializer_class = ForcastSerializer
