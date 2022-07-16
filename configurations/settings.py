@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_celery_results',     #this module will show all task results regarding celery in admin panel
     'django_celery_beat',        #This extension enables you to store the periodic task schedule in the database.
-    'django_filters',            #This module is used to filter query set
+    #'django_filters',            #This module is used to filter query set
     "corsheaders",               
     'users',
     'floodmanagement',        
@@ -174,9 +174,9 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         
     ),
-   'DEFAULT_FILTER_BACKENDS':(
-    'django_filters.rest_framework.DjangoFilterBackend'
-   )
+   #'DEFAULT_FILTER_BACKENDS':(
+  #  'django_filters.rest_framework.DjangoFilterBackend'
+  # )
   
 }
 
@@ -260,3 +260,4 @@ CELERY_RESULT_BACKEND = 'django-db'
 #Celery BEAT Settings
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
+#django filter error is conflicting   

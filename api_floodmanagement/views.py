@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (CreateAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView, )
 from api_floodmanagement.models import *
 from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer
-from django_filters.rest_framework import DjangoFilterBackend
+#from django_filters.rest_framework import DjangoFilterBackend
 
 class HelpList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET USER data who are requesting for HELP and USER can also POST their data .
@@ -53,7 +53,7 @@ class ForcastList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET Crowdsource data and POST crowdsource data .
     serializer_class = ForcastSerializer
     queryset = ForcastData.objects.all()
-    filter_backends=[DjangoFilterBackend]
+    #filter_backends=[DjangoFilterBackend]
     filterset_fields=['State']
     permission_classes = []
 
