@@ -8,7 +8,7 @@ from api_floodmanagement.models import *
 from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer
 #from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-import geopy # used for extracting longitude and latitude from location name
+#import geopy # used for extracting longitude and latitude from location name
 
 
 
