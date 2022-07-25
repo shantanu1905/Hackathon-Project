@@ -7,6 +7,10 @@ from rest_framework.generics import (CreateAPIView,ListCreateAPIView,RetrieveUpd
 from api_floodmanagement.models import *
 from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer
 #from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+import geopy # used for extracting longitude and latitude from location name
+
+
 
 class HelpList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET USER data who are requesting for HELP and USER can also POST their data .
@@ -27,6 +31,14 @@ class HelpDetail(RetrieveUpdateDestroyAPIView):
         # we will filter data on basis of current user 
         return UserHelpRequest.objects.all().filter(owner=self.request.user)
         
+class HelpAllList(ListCreateAPIView):
+    # With this endpoint we can perform GET methode to get only loged in user data
+    permission_classes = [IsAuthenticated]
+    serializer_class = HelpSerializer
+
+    def get_queryset(self):
+        # we will filter data on basis of current user 
+        return UserHelpRequest.objects.all().filter(owner=self.request.user)
 
 
 class CrowdSourceList(ListCreateAPIView):
@@ -37,6 +49,8 @@ class CrowdSourceList(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
 
 
 class CrowdSourceDetails(RetrieveUpdateDestroyAPIView):
@@ -61,10 +75,23 @@ class CrowdSourceListView(ListCreateAPIView):
 
 class ForcastList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET Crowdsource data and POST crowdsource data .
-    serializer_class = ForcastSerializer
+    
+    search_fields = ['State']
+    filter_backends = (filters.SearchFilter,)
     queryset = ForcastData.objects.all()
+    serializer_class = ForcastSerializer
     #filter_backends=[DjangoFilterBackend]
-    filterset_fields=['State']
+    #filterset_fields=['State']
     permission_classes = []
 
+
+class ForcastMapList(ListCreateAPIView):
+# With this endpoint we can do GET AND POST request to GET Crowdsource data and POST crowdsource data .
     
+    search_fields = ['State']
+    filter_backends = (filters.SearchFilter,)
+    queryset = ForcastData.objects.all()
+    serializer_class = ForcastSerializer
+    #filter_backends=[DjangoFilterBackend]
+    #filterset_fields=['State']
+    permission_classes = []
