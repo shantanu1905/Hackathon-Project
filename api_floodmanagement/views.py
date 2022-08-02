@@ -49,6 +49,7 @@ class CrowdSourceList(ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+        #print(serializer.data)
 
 
 
@@ -76,7 +77,7 @@ class CrowdSourceListView(ListCreateAPIView):
 class ForcastList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET Crowdsource data and POST crowdsource data .
     
-    search_fields = ['State']
+    search_fields = ['State', 'District' ]
     filter_backends = (filters.SearchFilter,)
     queryset = ForcastData.objects.all()
     serializer_class = ForcastSerializer

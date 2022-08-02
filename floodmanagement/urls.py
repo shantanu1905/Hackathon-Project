@@ -11,11 +11,15 @@ urlpatterns = [
     path('helplist/', Help_list.as_view(), name='helplist'),
     path('mapview/',  MapListView.as_view(), name='mapview'),
     path('mail/',  sendmain, name='sendmail'),
-    path('dump/',  datadump, name='datadump'),
+    path('dump/',  dumptest, name='datadump'),
+
+
+       
+       
+    path('home1/',  home1, name='datadump'),
 
 
 
 
-     path('delete/<int:UserHelpRequest_id>/' ,delete, name='delete'),
     
 ]

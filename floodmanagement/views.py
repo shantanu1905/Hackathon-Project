@@ -9,6 +9,7 @@ from .models import *
 from api_floodmanagement.models import *
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+import pandas as pd
 # Create your views here.
 import folium
 
@@ -84,11 +85,108 @@ class Help_list(ListView):
     template_name="webview/helpdesk.html"
 
 
-def delete(request , UserHelpRequest_id):
-    item= UserHelpRequest.objects.get(pk=UserHelpRequest_id)
-    item.delete()
-    messages.success(request, 'User Request is Deleted')
-    return render(request , "flood/deleted_successfully.html")
+def home1(request ):
+
+    data=UserHelpRequest.objects.values_list('latitude' , 'longitude' )
+    print(data)
+
+    m = folium.Map([21.735362, 79.0882],width=750, height=500, zoom_start=20)
+    for point in range(0, len(data)):
+       
+        folium.Marker(data[point], popup="GHRIET"  ,  icon=folium.Icon(color='Red', icon_color='white', icon='male', angle=0, prefix='fa') ).add_to(m)
+    m=m._repr_html_() #updated
+    context = {'my_map': m }
+    return render(request,"flood/maplocation.html", context)
+
+
+from geopy.geocoders import Nominatim
+def dumptest(request):
+    df = pd.read_html('https://aff.india-water.gov.in/table.php')
+    tableDF = pd.DataFrame((df[1]))
+    #run it only onces
+    old_name = list(tableDF.keys())
+    new_name = list(tableDF.iloc[0,:])
+    new_name = ['Sno','Site_Name','River','State','District','Day1','Flood_Condition1','Max_WL1','Day2','Flood_Condition2','Max_WL2','Day3','Flood_Condition3','Max_WL3','Day4','Flood_Condition4','Max_WL4','Day5','Flood_Condition5','Max_WL5']
+    renamed_dict = {}
+    type(new_name[0])
+    for i,j in zip(old_name,new_name):
+        renamed_dict[i] =j
+
+    updated_TableDF= tableDF.rename(columns=renamed_dict, inplace=False)
+    Mapdata=updated_TableDF.iloc[1:,1:7]
+    Location_data = Mapdata['District'].tolist()   #converting df column district to list
+    # Initialize Nominatim API
+    geolocator = Nominatim(user_agent="geoapiExercises")
+
+    location_latitude = []  # empty list to append data
+    location_longitude = []  # empty list to append data
+
+    for i in Location_data:
+        try:
+            location = geolocator.geocode(i)
+            #print(location.latitude)
+            location_latitude.append(location.latitude)
+            location_longitude.append(location.longitude)
+        except:
+            location_latitude.append("0.00")
+            location_longitude.append("0.00")
+            #print("error rised")
+    Mapdata['latitude'] = location_latitude   #converting list to dataframe column
+    Mapdata['longitude'] = location_longitude #converting list to dataframe column
+
+    for Sit ,Riv,St, Dis,D1,FC1,lat,log in zip(Mapdata.Site_Name , Mapdata.River, Mapdata.State , Mapdata.District
+     , Mapdata.Day1 , Mapdata.Flood_Condition1 , Mapdata.latitude , Mapdata.longitude):
+        models = FloodForcastMap(Site_Name=Sit , River=Riv, State=St ,District=Dis , Day1=D1 ,Flood_Condition1=FC1 ,latitude=lat ,longitude=log)
+        models.save()
+
+
+
+
+
+
+
+
+
+
+
+    return  HttpResponse('Data Dumped Succcessfuly')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def sendmain(request):
     send_mail_func.delay()

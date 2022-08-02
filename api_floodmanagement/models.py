@@ -16,6 +16,13 @@ EMERGENCY_TYPE=(
     ('Food and Shelter' , 'Food and Shelter'),
     )
 
+CATEGORY=(
+    ('Roads' , 'Roads'),
+    ('Flood' , 'Flood'),
+    ('Landslide' , 'Landslide'),
+    ('Safehouse' , 'Safehouse'),
+    
+    )
 
 
 class UserHelpRequest(models.Model):
@@ -33,9 +40,6 @@ class UserHelpRequest(models.Model):
         ordering = ['created_at']
 
 
-
-
-
 class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     body = models.TextField(blank=False)
@@ -49,16 +53,6 @@ class Comment(models.Model):
         return "%s %s" % (self.owner, self.body )
 
 
-
-
-CATEGORY=(
-    ('Roads' , 'Roads'),
-    ('Flood' , 'Flood'),
-    ('Landslide' , 'Landslide'),
-    ('Safehouse' , 'Safehouse'),
-    
-    )
-
 class CrowdSource(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     longitude = models.DecimalField(max_digits=19, decimal_places=16)
@@ -66,11 +60,24 @@ class CrowdSource(models.Model):
     category = models.CharField(max_length=30, choices = CATEGORY ,default = 'Flood')
     image = models.ImageField(upload_to='crowdsourcing/')
     description = models.TextField(blank=True)
-
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     
     #def __str__(self):
         #return self.owner
+
+    class Meta:
+        ordering = ['created_at']
+
+class FloodForcastMap(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    Site_Name = models.CharField(max_length=20)
+    River=models.CharField(max_length=20)
+    State=models.CharField(max_length=20)
+    District=models.CharField(max_length=20)
+    Day1=models.CharField(max_length=20)
+    Flood_Condition1=models.CharField(max_length=20)
+    longitude = models.DecimalField(max_digits=19, decimal_places=16)
+    latitude = models.DecimalField(max_digits=19, decimal_places=16)
 
     class Meta:
         ordering = ['created_at']

@@ -46,3 +46,5 @@ class ForcastOptions(admin.ModelAdmin):
         return format_html(f'<a href = "/admin/api_floodmanagement/forcastdata/{obj.id}/change/" class="default"> View </a>')
 
 admin.site.register(ForcastData , ForcastOptions)
+
+admin.site.register(FloodForcastMap )
