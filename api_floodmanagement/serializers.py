@@ -15,6 +15,7 @@ class HelpSerializer(serializers.ModelSerializer):
 
 class CrowdSourceSerializer(serializers.ModelSerializer):
     owner = serializers.CharField(read_only=True, default=serializers.CurrentUserDefault())
+    image = serializers.ImageField()
     class Meta:
         model = CrowdSource
         fields = ['id', 'created_at' , 'latitude', 'longitude', 'category' , 'image' , 'description','owner'  ]
