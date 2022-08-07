@@ -1,6 +1,14 @@
 from pydoc import describe
 from django.db import models
+from django.dispatch import receiver
 from api.models import User
+from django.db.models.signals import pre_save
+
+
+
+
+
+
 
 # Create your models here.
 
@@ -67,6 +75,13 @@ class CrowdSource(models.Model):
 
     class Meta:
         ordering = ['created_at']
+
+@receiver(pre_save , sender=CrowdSource)
+def crowdsourcetask(sender , instance ,**kwargs):
+    print("db updated")
+    print(instance.owner)
+
+
 
 class FloodForcastMap(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
