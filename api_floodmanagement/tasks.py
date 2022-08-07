@@ -7,6 +7,8 @@ from api_floodmanagement.models import *
 import pandas as pd
 from configurations.celery import *
 
+from geopy.geocoders import Nominatim
+
 @shared_task(bind=True)
 
 # Given below is a simple example of Celery Worker 
@@ -60,4 +62,54 @@ def datadump_task(self):
 @app.task(bind=True)
 def cleanup_task(self):
     ForcastData.objects.all().delete()
+    return 'done task'
+
+@app.task(bind=True)
+def map_data_dump(self):
+    df = pd.read_html('https://aff.india-water.gov.in/table.php')
+    tableDF = pd.DataFrame((df[1]))
+    #run it only onces
+    old_name = list(tableDF.keys())
+    new_name = list(tableDF.iloc[0,:])
+    new_name = ['Sno','Site_Name','River','State','District','Day1','Flood_Condition1','Max_WL1','Day2','Flood_Condition2','Max_WL2','Day3','Flood_Condition3','Max_WL3','Day4','Flood_Condition4','Max_WL4','Day5','Flood_Condition5','Max_WL5']
+    renamed_dict = {}
+    type(new_name[0])
+    for i,j in zip(old_name,new_name):
+        renamed_dict[i] =j
+
+    updated_TableDF= tableDF.rename(columns=renamed_dict, inplace=False)
+    Mapdata=updated_TableDF.iloc[1:,1:7]
+    Location_data = Mapdata['District'].tolist()   #converting df column district to list
+    # Initialize Nominatim API
+    geolocator = Nominatim(user_agent="geoapiExercises")
+
+    location_latitude = []  # empty list to append data
+    location_longitude = []  # empty list to append data
+
+    for i in Location_data:
+        try:
+            location = geolocator.geocode(i)
+            #print(location.latitude)
+            location_latitude.append(location.latitude)
+            location_longitude.append(location.longitude)
+        except:
+            location_latitude.append("0.00")
+            location_longitude.append("0.00")
+            #print("error rised")
+    Mapdata['latitude'] = location_latitude   #converting list to dataframe column
+    Mapdata['longitude'] = location_longitude #converting list to dataframe column
+
+    for Sit ,Riv,St, Dis,D1,FC1,lat,log in zip(Mapdata.Site_Name , Mapdata.River, Mapdata.State , Mapdata.District
+     , Mapdata.Day1 , Mapdata.Flood_Condition1 , Mapdata.latitude , Mapdata.longitude):
+        models = FloodForcastMap(Site_Name=Sit , River=Riv, State=St ,District=Dis , Day1=D1 ,Flood_Condition1=FC1 ,latitude=lat ,longitude=log)
+        models.save()
+
+
+    return 'Map Data Dumped Successfully'
+
+
+
+@app.task(bind=True)
+def mapdatacleanup_task(self):
+    FloodForcastMap.objects.all().delete()
     return 'done task'

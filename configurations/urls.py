@@ -38,3 +38,7 @@ urlpatterns = [
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+#admin.site.index_title = "Flood manangement administration"
+#admin.site.site_header = "Rescue Admin"

@@ -1,2 +1,2 @@
-celery -A configurations(project name) worker --pool=solo -l info     
+celery -A configurations worker --pool=solo -l info     
 celery -A configurations beat --loglevel=info 

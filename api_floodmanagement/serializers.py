@@ -25,4 +25,10 @@ class ForcastSerializer(serializers.ModelSerializer):
         fields = ['id', 'Site_Name' , 'River', 'State', 'District' , 'Day1' ,'Flood_Condition1' ,'Max_WL1'
                   , 'Day2' ,'Flood_Condition2' ,'Max_WL2', 'Day3' ,'Flood_Condition3' ,'Max_WL3'
                   , 'Day4' ,'Flood_Condition4' ,'Max_WL4', 'Day5' ,'Flood_Condition5' ,'Max_WL5' ]
+
+
+class MapForcastSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FloodForcastMap
+        fields = ['id', 'Site_Name' , 'River', 'State', 'District' , 'Day1' ,'Flood_Condition1' ,'latitude', 'longitude' ]
         

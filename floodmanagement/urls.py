@@ -10,10 +10,7 @@ urlpatterns = [
     path('create', PhotoCreateView.as_view(), name='create'),
     path('helplist/', Help_list.as_view(), name='helplist'),
     path('mapview/',  MapListView.as_view(), name='mapview'),
-    path('mail/',  sendmain, name='sendmail'),
-    path('dump/',  dumptest, name='datadump'),
-
-
+   
        
        
     path('home1/',  home1, name='datadump'),

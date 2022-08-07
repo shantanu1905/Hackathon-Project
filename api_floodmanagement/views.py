@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (CreateAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView, )
 from api_floodmanagement.models import *
-from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer
+from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer , MapForcastSerializer
 #from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 #import geopy # used for extracting longitude and latitude from location name
@@ -88,11 +88,7 @@ class ForcastList(ListCreateAPIView):
 
 class ForcastMapList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET Crowdsource data and POST crowdsource data .
-    
-    search_fields = ['State']
-    filter_backends = (filters.SearchFilter,)
-    queryset = ForcastData.objects.all()
-    serializer_class = ForcastSerializer
-    #filter_backends=[DjangoFilterBackend]
-    #filterset_fields=['State']
+
+    queryset = FloodForcastMap.objects.all()
+    serializer_class = MapForcastSerializer
     permission_classes = []

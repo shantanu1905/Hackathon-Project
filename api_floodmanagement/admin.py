@@ -47,4 +47,15 @@ class ForcastOptions(admin.ModelAdmin):
 
 admin.site.register(ForcastData , ForcastOptions)
 
-admin.site.register(FloodForcastMap )
+
+
+
+class FloodMapOptions(admin.ModelAdmin):
+    list_display = ('Site_Name' , 'River' , 'State' , 'District' , 'ViewMap')
+
+    def ViewMap(self , obj):
+        return format_html(f'<a href = "https://www.google.com/maps/place/{obj.Site_Name}" class="default"> View </a>')
+
+
+
+admin.site.register(FloodForcastMap , FloodMapOptions)
