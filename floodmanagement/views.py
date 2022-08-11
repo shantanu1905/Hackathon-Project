@@ -28,11 +28,10 @@ class HomeListView(TemplateView):
 
     template_name = 'flood/home.html'
 
-def Crowdsourcelist(request): 
 
-    return render(request,"flood/crowdsourcelist.html")
-
-
+class  Crowdsource_list(ListView):
+    model = CrowdSource
+    template_name="flood/crowdsourcelist.html"
 
 
 

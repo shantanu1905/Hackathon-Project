@@ -13,6 +13,8 @@ urlpatterns = [
        
     path('helpmap',  HelpMap, name='HelpMap'),
     path('crowdsourcemap',  CrowdSourceMap, name='CrowdSourceMap'),
+    path('crowdsourcelist',  Crowdsource_list.as_view(), name='Crowdsourcelist'),
+
     path('route',  routefinder, name='routefinder'),
 
 
