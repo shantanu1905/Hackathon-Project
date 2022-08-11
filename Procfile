@@ -1,1 +1,1 @@
-web: daphne -b 0.0.0.0 -p $PORT configurations.asgi:application
+gunicorn configurations.asgi --log-file -n
