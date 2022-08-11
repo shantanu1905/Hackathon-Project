@@ -1,1 +1,1 @@
-gunicorn configurations.asgi --log-file -n
+daphne configurations.asgi:application
