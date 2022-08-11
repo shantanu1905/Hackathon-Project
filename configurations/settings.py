@@ -86,8 +86,8 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'configurations.wsgi.application'
-ASGI_APPLICATION = "configurations.asgi.application"
+WSGI_APPLICATION = 'configurations.wsgi.application'
+#ASGI_APPLICATION = "configurations.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -280,3 +280,5 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
  #web: gunicorn configurations.asgi --log-file -
+ #web: daphne configurations.asgi:application --port $PORT --bind 0.0.0.0 -v2
+ 
