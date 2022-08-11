@@ -1,1 +1,1 @@
-web: gunicorn configurations.asgi --log-file -
+web: gunicorn configurations.wsgi --log-file -
