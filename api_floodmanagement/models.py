@@ -1,10 +1,14 @@
+from dbm import dumb
+import json
 from pydoc import describe
 from django.db import models
 from django.dispatch import receiver
 from api.models import User
 from django.db.models.signals import pre_save
 
-
+#django channels settings
+from channels.layers import  get_channel_layer
+from asgiref.sync import async_to_sync
 
 
 
@@ -128,8 +132,22 @@ class ForcastData(models.Model):
    
 
 
-    
+class notification(models.Model):
+    user = models.ForeignKey(User , on_delete=models.CASCADE)
+    notificationnn =  models.TextField(max_length=100)
+    is_seen = models.BooleanField(default=False)
 
 
+    def save(self , *args , **kwars):
+        channel_layer = get_channel_layer()
+        notification_objs = notification.objects.filter(is_seen=False)
+        data={'currunt notification': self.notificationnn}
 
-    
+        async_to_sync(channel_layer.group_send)(
+            'test_consumers_group' , {
+                'type':'send_notification',
+                'value':json.dumps(data)
+            }
+        )
+        print('SAVE CALLED ')
+        super(notification,self).save(*args , **kwars)
