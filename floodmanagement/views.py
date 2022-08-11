@@ -11,102 +11,113 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 import pandas as pd
 # Create your views here.
+from django.contrib.auth.models import User
+from folium.plugins import *
 import folium
-
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required, permission_required
 #{{ my_map|safe }}
+from django.contrib import messages
 
 from api_floodmanagement.tasks import *
+import openrouteservice
+from openrouteservice import convert
+import json
 
 class HomeListView(TemplateView):
 
     template_name = 'flood/home.html'
 
-    def get_context_data(self, **kwargs):
-       
-        m = folium.Map([21.1458, 79.0882],width=750, height=500, zoom_start=20)
-        folium.Marker([21.124181852903053, 79.00303866845013] , tooltip="click me" , popup="GHRIET").add_to(m)
-        test = folium.Html('<b>Hello world</b>', script=True)
+def Crowdsourcelist(request): 
 
-        popup = folium.Popup(test, max_width=2650)
-        folium.RegularPolygonMarker(location=[51.5, -0.25], popup=popup).add_to(m)
-        m=m._repr_html_() #updated
-        
-        
-        image = CrowdSource.objects.all()
-        context_old = super().get_context_data(**kwargs)
-        context = { 'context_old':context_old , 'my_map': m , 'image':image}
-        return context
+    return render(request,"flood/crowdsourcelist.html")
 
-class MapListView(TemplateView):
+
+
+
+
+def HelpMap(request ):
+    if request.user.is_authenticated:
+        if request.user.is_admin:
+            data=UserHelpRequest.objects.values_list('latitude' , 'longitude' )
     
 
-    template_name = 'flood/maplocation.html'
-
-    def get_context_data(self, **kwargs):
-       
-
-        name = 'shantanu'
-        data=CrowdSource.objects.all()
-        context_old = super().get_context_data(**kwargs)
-        context = {'name':name , 'context_old':context_old ,'x':data }
-        return context
-
-   
-
-
-class PhotoCreateView(LoginRequiredMixin, CreateView):
-
-
-    template_name = 'flood/create.html'
-    fields = ['title']
-
-    success_url = reverse_lazy('flood:home')  #Users will be redirected to the photo dashboard if the photo creation was successful.
-
-    def post(self ,request):
-        my_data = request.POST
-        print(my_data)
-        return super(CreateView, self).render_to_response()
+            df = pd.DataFrame(list(UserHelpRequest.objects.all().values()))
+            #print(df)
+            locations = df[['latitude', 'longitude']]
+            locationlist = locations.values.tolist()
+        
+            m = folium.Map([20.5937, 78.9629], zoom_start=12)
+            for point in range(0, len(locationlist)):
+                folium.Marker(locationlist[point], popup='created_at:  '+str(df['created_at'][point])+' \n'+ 'TypeOfEmergency:  ' 
+                +str(df['TypeOfEmergency'][point]) + '\n' + 'RequestStatus' + str(df['RequestStatus'][point]),).add_to(m)
+        
+             
+            m=m._repr_html_() #updated
+            context = {'my_map': m }
+            return render(request,"flood/helpmap.html", context)
+        messages.warning(request, 'To view this page Admin Permission is required !!')
+        return render(request,"flood/helpmap.html")
+    else:
+        messages.warning(request, 'To view this page login is required !!')
+        return render(request,"flood/helpmap.html")
+        
 
 
 
-    def form_valid(self, form):
+def CrowdSourceMap(request ):
+    if request.user.is_authenticated:
+        if request.user.is_admin:
+            df = pd.DataFrame(list(CrowdSource.objects.all().values()))
+            #print(df)
+            locations = df[['latitude', 'longitude']]
+            locationlist = locations.values.tolist()         
+            m = folium.Map([20.5937, 78.9629], zoom_start=12)
+            for point in range(0, len(locationlist)):
+                folium.Marker(locationlist[point], popup='created_at:  '+str(df['created_at'][point])+' \n'+ 'description:  ' 
+                +str(df['description'][point]) + '\n' + 'category' + str(df['category'][point]),).add_to(m)         
+             
+            m=m._repr_html_() #updated
+            context = {'my_map': m }
+            return render(request,"flood/crowdsourcemap.html", context)
+        messages.warning(request, 'To view this page Admin Permission is required !!')
+        return render(request,"flood/helpmap.html")
+    else:
+        messages.warning(request, 'To view this page login is required !!')
+        return render(request,"flood/helpmap.html")
 
-        form.instance.submitter = self.request.user
-
-        return super().form_valid(form)
 
 
 
 
-class Help_list(ListView):
-    model = UserHelpRequest
-
-    context_object_name = 'userlist'
-    template_name="webview/helpdesk.html"
 
 
-def home1(request ):
 
-    data=UserHelpRequest.objects.values_list('latitude' , 'longitude' )
-    print(data)
+def routefinder(request):
+    client = openrouteservice.Client(key='5b3ce3597851110001cf6248ad84107cc5eb4c1cbf77a7cea0874772')
+    coords = ((21.1146138,79.1003920024),(21.06201943,78.8702031303))
+    res = client.directions(coords)
+    geometry = client.directions(coords)['routes'][0]['geometry']
+    decoded = convert.decode_polyline(geometry)
+    
+    distance_txt = "<h4> <b>Distance :&nbsp" + "<strong>"+str(round(res['routes'][0]['summary']['distance']/1000,1))+" Km </strong>" +"</h4></b>"
+    duration_txt = "<h4> <b>Duration :&nbsp" + "<strong>"+str(round(res['routes'][0]['summary']['duration']/60,1))+" Mins. </strong>" +"</h4></b>"
 
-    m = folium.Map([21.735362, 79.0882],width=750, height=500, zoom_start=20)
-    for point in range(0, len(data)):
-       
-        folium.Marker(data[point], popup="GHRIET"  ,  icon=folium.Icon(color='Red', icon_color='white', icon='male', angle=0, prefix='fa') ).add_to(m)
+    m = folium.Map(location=[6.074834613830474, 80.25749815575348],zoom_start=10, control_scale=True,tiles="cartodbpositron")
+    folium.GeoJson(decoded).add_child(folium.Popup(distance_txt+duration_txt,max_width=300)).add_to(m)
+    
+    #source marker
+    folium.Marker(location=list(coords[0][::-1]),popup="Galle fort",icon=folium.Icon(color="green"),).add_to(m)
+    #destination marker
+    folium.Marker(location=list(coords[1][::-1]),popup="Jungle beach",icon=folium.Icon(color="red"),).add_to(m)
+    m.save('map.html')
+
     m=m._repr_html_() #updated
+
     context = {'my_map': m }
-    return render(request,"flood/maplocation.html", context)
 
 
-
-
-
-
-
-
-
-
+    return render(request,"flood/helpmap.html",context)
 
 
 

@@ -3,85 +3,46 @@
 {% block content %}
 
 
-<h2>My Details</h2>
-{{user.name}}  <br>
-{{user.email}} <br>
-
-{{user.contact}}
-
-<style>
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-      }
-      
-      td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-      
-      tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-    </style>
-
-<div Class=" align-items-center justify-content-center">
-<h2>API Endpoints</h2>
-
-<table>
-    <tr>
-      <th>Api Endpoint</th>
-      <th>Name</th>
-      <th>Request allowed</th>
-    </tr>
-    <tr>
-      <td>https://floodmanagement.herokuapp.com/api/user/register/</td>
-      <td>User Registration</td>
-      <td>POST</td>
-    </tr>
-    <tr>
-      <td>https://floodmanagement.herokuapp.com/api/user/login/</td>
-      <td>User Login</td>
-      <td>POST</td>
-    </tr>
-    <tr>
-      <td>https://floodmanagement.herokuapp.com/api/user/profile/</td>
-      <td>Toget User Profile</td>
-      <td>GET</td>
-    </tr>
-    <tr>
-      <td>https://floodmanagement.herokuapp.com/api/floodmanagement/help/</td>
-      <td>User location who are Requesting for help will appear</td>
-      <td>GET</td>
-    </tr>
-    <tr>
-      <td>https://floodmanagement.herokuapp.com/api/floodmanagement/helpdetails/id/</td>
-      <td>To update user help request details</td>
-      <td>PUT</td>
-    </tr>
-    <tr>
-      <td>https://floodmanagement.herokuapp.com/api/floodmanagement/helpdetails/id/</td>
-      <td>To Delete help request</td>
-      <td>Delete</td>
-    </tr>
-  </table>
-  
-
-
-
+<div class="list-group list-group-light">
+  <a
+    href="{% url 'admin:index' %}"
+    class="list-group-item list-group-item-action px-3 border-0 active"
+    aria-current="true"
+    >⚠️ Open Admin Panel ⚠️</a
+  >
+  <a
+    href="{% url 'flood:HelpMap' %}"
+    class="list-group-item list-group-item-action px-3 border-0"
+    >🗺️ View Help Request Map 🗺️ </a
+  >
+  <a
+    href="{% url 'flood:CrowdSourceMap' %}"
+    class="list-group-item list-group-item-action px-3 border-0"
+    >🗺️ View CrowdSource Maps 🗺️</a
+  >
+  <a
+    href="#"
+    class="list-group-item list-group-item-action px-3 border-0"
+    >Porta ac consectetur ac</a
+  >
+  <a
+    class="list-group-item list-group-item-action px-3 border-0 disabled"
+    >Vestibulum at eros</a
+  >
 </div>
 
 
 
-{% for CrowdSource in image %}
 
-<img src="{{ CrowdSource.image.url}}" class="img-responsive" style="width: 100%; float: left; margin-right: 10px;" />
 
-{{CrowdSource.latitude}}
 
-{% endfor %}
+
+
+
+
+
+
+
 
 
 {% endblock %}

@@ -88,7 +88,8 @@ class ForcastList(ListCreateAPIView):
 
 class ForcastMapList(ListCreateAPIView):
 # With this endpoint we can do GET AND POST request to GET Crowdsource data and POST crowdsource data .
-
+    search_fields = ['State', 'District' ]
+    filter_backends = (filters.SearchFilter,)
     queryset = FloodForcastMap.objects.all()
     serializer_class = MapForcastSerializer
     permission_classes = []
