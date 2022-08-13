@@ -97,6 +97,16 @@ rel="stylesheet"
 
 
 
+<!--alert start here-->
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+  {{message}}
+  
+</div>
+{% endfor %}
+{% endif %}
+<!--alert end here-->   
 
 
 

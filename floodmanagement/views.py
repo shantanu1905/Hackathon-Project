@@ -30,9 +30,16 @@ class HomeListView(TemplateView):
 
 
 class  Crowdsource_list(ListView):
+    
     model = CrowdSource
     template_name="flood/crowdsourcelist.html"
 
+
+def deletecs(request , CrowdSource_id):
+    item= CrowdSource.objects.get(pk=CrowdSource_id)
+    item.delete()
+    messages.success(request, 'Deleted Successfullly')
+    return render(request , "base.html")
 
 
 def HelpMap(request ):

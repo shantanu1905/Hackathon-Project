@@ -2,75 +2,58 @@
 
 {% block content %}
 
-{% for CrowdSource in invoice_list %}
-
-{{ CrowdSource.image}}
 
 
-{% endfor %}
+<h6> CrowdSource Data </h6>
 
-<div class="container">
-    <br>  <p class="text-center">CrowdSource Data <a href="" target="_blank"></a>{{ CrowdSource.description}}
-    </p>
-    <hr>
-    
-    
-    
-    <div class="card">
-    <table class="table table-hover shopping-cart-wrap">
-    <thead class="text-muted">
-    <tr>
-      <th scope="col">Product</th>
-      <th scope="col" width="120">Quantity</th>
-      <th scope="col" width="120">Price</th>
-      <th scope="col" width="200" class="text-right">Action</th>
-    </tr>
+<table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>View on Map</th>
+        <th>Position(Long/lat)</th>
+        <th>Actions</th>
+      </tr>
     </thead>
+    {% for crowdsourceobject in object_list %}
     <tbody>
-    <tr>
+      <tr>
         <td>
-    <figure class="media">
-        <div class="img-wrap"><img src="http://bootstrap-ecommerce.com/main/images/items/2.jpg" class="img-thumbnail img-sm"></div>
-        <figcaption class="media-body">
-            <h6 class="title text-truncate">Product name goes here </h6>
-            <dl class="param param-inline small">
-              <dt>Size: </dt>
-              <dd>XXL</dd>
-            </dl>
-            <dl class="param param-inline small">
-              <dt>Color: </dt>
-              <dd>Orange color</dd>
-            </dl>
-        </figcaption>
-    </figure> 
+          <div class="d-flex align-items-center">
+            <img
+                src="{{crowdsourceobject.image.url }}"
+                alt=""
+                style="width: 45px; height: 45px"
+                class="rounded-circle"
+                />
+            <div class="ms-3">
+              <p class="fw-bold mb-1">{{crowdsourceobject.owner}}</p>
+              <p class="text-muted mb-0"><strong>Emergency Type :</strong> {{crowdsourceobject.category}}</p>
+            </div>
+          </div>
         </td>
-        <td> 
-            <select class="form-control">
-                <option>1</option>
-                <option>2</option>	
-                <option>3</option>	
-                <option>4</option>	
-            </select> 
+        <td>
+          <p class="fw-normal mb-1">{{crowdsourceobject.description}}</p>
+          <p class="text-muted mb-0"><strong>Created_at :</strong> {{crowdsourceobject.created_at}}</p>
         </td>
-        <td> 
-            <div class="price-wrap"> 
-                <var class="price">USD 145</var> 
-                <small class="text-muted">(USD5 each)</small> 
-            </div> <!-- price-wrap .// -->
+        <td>
+          <a type="button" class="btn btn-link btn-sm btn-rounded" href = "{% url 'flood:CrowdSourceMap' %}" > click to View  </a>
         </td>
-        <td class="text-right"> 
-        <a title="" href="" class="btn btn-outline-success" data-toggle="tooltip" data-original-title="Save to Wishlist"> <i class="fa fa-heart"></i></a> 
-        <a href="" class="btn btn-outline-danger"> × Remove</a>
-        </td>
-    </tr>
-   
-    
+        <td>{{crowdsourceobject.longitude}} <br>{{crowdsourceobject.latitude}} </td>
+        <td><form action="{% url 'flood:deletecs' crowdsourceobject.id %}"
+            method="post" class="d-inline">{% csrf_token %}
+            <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+            </form></td>
+      </tr>
+     
+{% endfor %}
+      
     </tbody>
-    </table>
-    </div> <!-- card.// -->
-    
-    </div> 
-    <!--container end.//-->
+  </table>
+
+
+
 
 
 

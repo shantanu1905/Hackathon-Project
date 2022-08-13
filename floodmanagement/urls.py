@@ -14,6 +14,7 @@ urlpatterns = [
     path('helpmap',  HelpMap, name='HelpMap'),
     path('crowdsourcemap',  CrowdSourceMap, name='CrowdSourceMap'),
     path('crowdsourcelist',  Crowdsource_list.as_view(), name='Crowdsourcelist'),
+    path('deletecs/<int:CrowdSource_id>/' ,deletecs, name='deletecs'),
 
     path('route',  routefinder, name='routefinder'),
 

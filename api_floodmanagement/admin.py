@@ -20,7 +20,7 @@ class CrowdSourceOptions(admin.ModelAdmin):
     readonly_fields = ('photo_tag' , )
 
     def photo_tag(self , obj):
-        return format_html(f'<img scr="/media/crowdsourcing/{obj.image}" class="img-responsive" style="width: 100px; hight: "/>')
+        return format_html(f'<img scr="/media/crowdsourcing/{obj.image.url}" class="img-responsive" style="width: 100px; hight: "/>')
 
     def Details(self , obj):
         return format_html(f'<a href = "/admin/api_floodmanagement/crowdsource/{obj.id}/change/" class="default"> View </a>')
