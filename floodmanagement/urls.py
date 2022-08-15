@@ -15,13 +15,17 @@ urlpatterns = [
     path('crowdsourcemap',  CrowdSourceMap, name='CrowdSourceMap'),
     path('crowdsourcelist',  Crowdsource_list.as_view(), name='Crowdsourcelist'),
     path('deletecs/<int:CrowdSource_id>/' ,deletecs, name='deletecs'),
+    path('helplist',  HelpRequest_list.as_view(), name='HelpRequest_list'),
+    path('deletehr/<int:UserHelpRequest_id>/' ,deletehr, name='deletehr'),
+    path('update/<int:UserHelpRequest_id>', update, name='update'),
+    path('update/updaterecord/<int:UserHelpRequest_id>', updaterecord, name='updaterecord'),
 
     path('route',  routefinder, name='routefinder'),
 
+]
 
 
 
 
 
     
-]

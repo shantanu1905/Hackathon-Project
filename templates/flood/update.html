@@ -1,0 +1,40 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+
+
+
+
+<form action="updaterecord/{{ Helpdata.id }}" method="post">
+    {% csrf_token %}
+
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Owner : {{Helpdata.owner}} || Id : {{ Helpdata.id }}</h5>
+      <p class="card-text">
+        Update User Request Status{{ Helpdata.id }}
+        <select class="form-select" aria-label="Default select example" name="RequestStatus">
+            <option selected>{{ Helpdata.RequestStatus }}</option>
+            <option value="HELP ALERT SEND TO AUTHORITIES">HELP ALERT SEND TO AUTHORITIES</option>
+            <option value="HELP TO YOUR LOCATION DEPLOYED">HELP TO YOUR LOCATION DEPLOYED</option>
+            <option value="OPERATION COMPLETED">OPERATION COMPLETED</option>
+          </select>
+
+      </p>
+      <button type="Submit" class="btn btn-primary">Update</button>
+    </div>
+  </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+{% endblock %}

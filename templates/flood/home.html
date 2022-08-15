@@ -8,27 +8,30 @@
     href="{% url 'admin:index' %}"
     class="list-group-item list-group-item-action px-3 border-0 active"
     aria-current="true"
-    >⚠️ Open Admin Panel ⚠️</a
+    >⚠️ Open Admin Panel </a
+  >
+  <a
+    href="{% url 'flood:HelpRequest_list' %}"
+    class="list-group-item list-group-item-action px-3 border-0 "
+    >View HelpRequest data</a
   >
   <a
     href="{% url 'flood:HelpMap' %}"
     class="list-group-item list-group-item-action px-3 border-0"
-    >🗺️ View Help Request Map 🗺️ </a
-  >
-  <a
-    href="{% url 'flood:CrowdSourceMap' %}"
-    class="list-group-item list-group-item-action px-3 border-0"
-    >🗺️ View CrowdSource Maps 🗺️</a
+    >🗺️ View Help Request Map  </a
   >
   <a
     href="{% url 'flood:Crowdsourcelist' %}"
     class="list-group-item list-group-item-action px-3 border-0"
-    >View CrowdSource data list</a
+    >View CrowdSource data </a
   >
   <a
-    class="list-group-item list-group-item-action px-3 border-0 disabled"
-    >Vestibulum at eros</a
+    href="{% url 'flood:CrowdSourceMap' %}"
+    class="list-group-item list-group-item-action px-3 border-0"
+    >🗺️ View CrowdSource Maps </a
   >
+  
+  
 </div>
 
 

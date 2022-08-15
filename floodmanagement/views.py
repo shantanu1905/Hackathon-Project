@@ -24,22 +24,60 @@ import openrouteservice
 from openrouteservice import convert
 import json
 
+#Home Screen
 class HomeListView(TemplateView):
-
     template_name = 'flood/home.html'
 
-
+#Admin Screen for Crowdsource data
 class  Crowdsource_list(ListView):
-    
     model = CrowdSource
     template_name="flood/crowdsourcelist.html"
 
-
+#Admin delete function for Crowdsource data
 def deletecs(request , CrowdSource_id):
     item= CrowdSource.objects.get(pk=CrowdSource_id)
     item.delete()
     messages.success(request, 'Deleted Successfullly')
     return render(request , "base.html")
+
+
+#Admin Screen for Help data
+class  HelpRequest_list(ListView):
+    model = UserHelpRequest
+    template_name="flood/Userhelplist.html"
+
+#Admin delete function for Help data
+def deletehr(request , UserHelpRequest_id):
+    item= UserHelpRequest.objects.get(pk=UserHelpRequest_id)
+    item.delete()
+    messages.success(request, 'Deleted Successfullly')
+    return render(request , "base.html")
+
+def update(request, UserHelpRequest_id):
+  Helpdata = UserHelpRequest.objects.get(pk=UserHelpRequest_id)
+  context = {
+    'Helpdata': Helpdata,
+  }
+  return render(request , "flood/update.html" , context)
+  
+def updaterecord(request, UserHelpRequest_id):
+  RequestStatus = request.POST['RequestStatus']
+
+  Helpdata = UserHelpRequest.objects.get(pk=UserHelpRequest_id)
+  Helpdata.RequestStatus = RequestStatus
+  Helpdata.save()
+  messages.success(request, 'Request Updated Successfullly')
+  return render(request , "flood/Userhelplist.html")
+  
+
+
+
+
+
+
+
+
+
 
 
 def HelpMap(request ):

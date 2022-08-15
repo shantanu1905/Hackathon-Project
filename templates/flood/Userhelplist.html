@@ -1,0 +1,96 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+
+<h6> UserHelpRequest Data </h6>
+<div class="btn-group shadow-0" role="group">
+    <a type="button"  href="{% url 'flood:HelpRequest_list' %}" class="btn btn-link" data-mdb-color="dark">Refresh Page</a>
+    <a type="button"  href="{% url 'flood:home' %}" class="btn btn-link" data-mdb-color="dark">Home</a>
+    <a type="button"  href="{% url 'flood:HelpMap' %}" class="btn btn-link" data-mdb-color="dark">Map</a>
+
+
+</div>
+
+<table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+      <tr>
+        <th>Name</th>
+        <th>Time Stamp</th>
+        <th>View on Map</th>
+        <th>Position(Long/lat)</th>
+        <th>Actions(Delete)</th>
+        <th>Actions(Update)</th>
+      </tr>
+    </thead>
+    {% for helpeobject in object_list %}
+    <tbody>
+      <tr>
+        <td>
+          <div class="d-flex align-items-center">
+            <img
+                src="https://yt3.ggpht.com/ytc/AMLnZu-D_TGDEkHSn_7bqS5JirQby30OpXyy4C3MrmRh=s900-c-k-c0x00ffffff-no-rj"
+                alt=""
+                style="width: 45px; height: 45px"
+                class="rounded-circle"
+                />
+            <div class="ms-3">
+              <p class="fw-bold mb-1">{{helpeobject.owner}}</p>
+              <p class="text-muted mb-0"><strong>Emergency Type :</strong> {{helpeobject.TypeOfEmergency}}</p>
+              <p class="text-muted mb-0"><strong>Request Status :</strong> {{helpeobject.RequestStatus}}</p>
+
+            </div>
+          </div>
+        </td>
+        <td>
+          <p class="fw-normal mb-1">{{helpeobject.description}}</p>
+          <p class="text-muted mb-0"><strong>Created_at :</strong> {{helpeobject.created_at}} <br> <strong>Updated_at :</strong> {{helpeobject.updated_at}}</p>
+        </td>
+        <td>
+          <a type="button" class="btn btn-link btn-sm btn-rounded" href = "{% url 'flood:HelpMap' %}" > click to View  </a>
+        </td>
+        <td>{{helpeobject.longitude}} <br>{{helpeobject.latitude}} </td>
+        <td><form action="{% url 'flood:deletehr' helpeobject.id %}"
+            method="post" class="d-inline">{% csrf_token %}
+            <input type="submit" class="btn btn-danger btn-sm" value="Delete">
+            </form></td>
+        <td><form action="{% url 'flood:update' helpeobject.id %}"
+            method="post" class="d-inline">{% csrf_token %}
+            <input type="submit" class="btn btn-info btn-sm" value="Update">
+            </form></td>
+      </tr>
+     
+{% endfor %}
+      
+    </tbody>
+  </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

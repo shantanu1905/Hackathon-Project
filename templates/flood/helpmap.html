@@ -2,23 +2,15 @@
 
 {% block content %}
 
-  <!--alert start here-->
-  {% if messages %}
-  {% for message in messages %}
-  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-    {{message}}
     
-  </div>
-  {% endfor %}
-  {% endif %}
-  <!--alert end here-->   
   
+  <div class="btn-group shadow-0" role="group">
+    <a type="button"  href="{% url 'flood:HelpMap' %}" class="btn btn-link" data-mdb-color="dark">Refresh Page</a>
+    <a type="button"  href="{% url 'flood:home' %}" class="btn btn-link" data-mdb-color="dark">Home</a>
+    <a type="button"  href="{% url 'flood:HelpRequest_list' %}" class="btn btn-link" data-mdb-color="dark">Back to Admin</a>
 
 
-
-
-
-
+</div>
 
 
 
