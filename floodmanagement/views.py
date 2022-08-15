@@ -1,10 +1,6 @@
-from django.http import HttpResponse
 from django.shortcuts import render
-from django.shortcuts import get_object_or_404
-from django.core.exceptions import PermissionDenied
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView , TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.urls import reverse_lazy  #is used in CBVs to redirect the users to a specific URL.
 from .models import *
 from api_floodmanagement.models import *
 from django.contrib import messages
@@ -14,11 +10,7 @@ import pandas as pd
 from django.contrib.auth.models import User
 from folium.plugins import *
 import folium
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required, permission_required
 #{{ my_map|safe }}
-from django.contrib import messages
-
 from api_floodmanagement.tasks import *
 import openrouteservice
 from openrouteservice import convert
@@ -29,37 +21,59 @@ class HomeListView(TemplateView):
     template_name = 'flood/home.html'
 
 #Admin Screen for Crowdsource data
-class  Crowdsource_list(ListView):
-    model = CrowdSource
-    template_name="flood/crowdsourcelist.html"
+def Crowdsource_list(request):
+    if request.user.is_authenticated:
+        if request.user.is_admin:
+            object_list = CrowdSource.objects.all()
+            context = {
+                'object_list': object_list,
+                }
+            return render(request , "flood/crowdsourcelist.html" , context)
+        messages.warning(request, 'To view this page Admin Permission is required !!')
+        return render(request,"flood/home.html")
+    else:
+        messages.warning(request, 'To view this page login is required !!')
+        return render(request,"flood/home.html")
 
 #Admin delete function for Crowdsource data
 def deletecs(request , CrowdSource_id):
     item= CrowdSource.objects.get(pk=CrowdSource_id)
     item.delete()
     messages.success(request, 'Deleted Successfullly')
-    return render(request , "base.html")
+    return render(request , "flood/crowdsourcelist.html")
 
 
 #Admin Screen for Help data
-class  HelpRequest_list(ListView):
-    model = UserHelpRequest
-    template_name="flood/Userhelplist.html"
+def HelpRequest_list(request):
+    if request.user.is_authenticated:
+        if request.user.is_admin:
+            object_list = UserHelpRequest.objects.all()
+            context = {
+                'object_list': object_list,
+                }
+            return render(request , "flood/Userhelplist.html" , context)
+        messages.warning(request, 'To view this page Admin Permission is required !!')
+        return render(request,"flood/home.html")
+    else:
+        messages.warning(request, 'To view this page login is required !!')
+        return render(request,"flood/home.html")
 
 #Admin delete function for Help data
 def deletehr(request , UserHelpRequest_id):
     item= UserHelpRequest.objects.get(pk=UserHelpRequest_id)
     item.delete()
     messages.success(request, 'Deleted Successfullly')
-    return render(request , "base.html")
+    return render(request , "flood/Userhelplist.html")
 
+#Update function for Help data
 def update(request, UserHelpRequest_id):
   Helpdata = UserHelpRequest.objects.get(pk=UserHelpRequest_id)
   context = {
     'Helpdata': Helpdata,
   }
   return render(request , "flood/update.html" , context)
-  
+
+#Update function for Help data
 def updaterecord(request, UserHelpRequest_id):
   RequestStatus = request.POST['RequestStatus']
 
@@ -69,17 +83,7 @@ def updaterecord(request, UserHelpRequest_id):
   messages.success(request, 'Request Updated Successfullly')
   return render(request , "flood/Userhelplist.html")
   
-
-
-
-
-
-
-
-
-
-
-
+#Help Request Map 
 def HelpMap(request ):
     if request.user.is_authenticated:
         if request.user.is_admin:
@@ -101,14 +105,12 @@ def HelpMap(request ):
             context = {'my_map': m }
             return render(request,"flood/helpmap.html", context)
         messages.warning(request, 'To view this page Admin Permission is required !!')
-        return render(request,"flood/helpmap.html")
+        return render(request,"flood/home.html")
     else:
         messages.warning(request, 'To view this page login is required !!')
-        return render(request,"flood/helpmap.html")
-        
+        return render(request,"flood/home.html")
 
-
-
+#CrowdSource data Map
 def CrowdSourceMap(request ):
     if request.user.is_authenticated:
         if request.user.is_admin:
@@ -125,16 +127,10 @@ def CrowdSourceMap(request ):
             context = {'my_map': m }
             return render(request,"flood/crowdsourcemap.html", context)
         messages.warning(request, 'To view this page Admin Permission is required !!')
-        return render(request,"flood/helpmap.html")
+        return render(request,"flood/home.html")
     else:
         messages.warning(request, 'To view this page login is required !!')
-        return render(request,"flood/helpmap.html")
-
-
-
-
-
-
+        return render(request,"flood/home.html")
 
 
 def routefinder(request):
