@@ -10,6 +10,13 @@ path('crowdsourcedetails/<int:pk>/', CrowdSourceDetails.as_view() , name='CrowdS
 path('crowdsourcelist/' , CrowdSourceListView.as_view()  , name ='CrowdSourceList' ) ,
 path('forcast/', ForcastList.as_view() , name='ForcastData'),      #to GET Forcast Data
 path('forcastmap/', ForcastMapList.as_view() , name='ForcastMap'),      #to GET Forcast Data for Map plotting
+path('tips/', Tips.as_view() , name='Tips'),      #to GET Tips Data for Do's and Don'ts
+path('saftycheck/', saftycheck.as_view() , name='saftycheck'),      #to GET Tips Data for Do's and Don'ts
+
+
+
+
+
 
 
 

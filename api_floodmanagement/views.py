@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (CreateAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView, )
 from api_floodmanagement.models import *
-from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer , MapForcastSerializer
+from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer , MapForcastSerializer , TipsSerializer , SafeCheckSerializer
 #from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 #import geopy # used for extracting longitude and latitude from location name
@@ -93,3 +93,24 @@ class ForcastMapList(ListCreateAPIView):
     queryset = FloodForcastMap.objects.all()
     serializer_class = MapForcastSerializer
     permission_classes = []
+
+class Tips(ListCreateAPIView):
+# With this endpoint we can do GET request to GET Tips data .
+    search_fields = ['tips_category' ]
+    filter_backends = (filters.SearchFilter,)
+    queryset = Tips.objects.all()
+    serializer_class = TipsSerializer
+    permission_classes = []
+
+
+class saftycheck(ListCreateAPIView):
+    queryset = SaftyCheck.objects.all()
+    serializer_class = SafeCheckSerializer
+
+
+
+def calculatedistance(pk):
+    dataset = ForcastData.object.all()
+    
+
+

@@ -32,4 +32,16 @@ class MapForcastSerializer(serializers.ModelSerializer):
     class Meta:
         model = FloodForcastMap
         fields = ['id', 'Site_Name' , 'River', 'State', 'District' , 'Day1' ,'Flood_Condition1' ,'latitude', 'longitude' ]
-        
+
+class TipsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tips
+        fields = ['id','tips_category', 'image' ]
+
+
+class SafeCheckSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SaftyCheck
+        fields = ['latitude','longitude']
+
+

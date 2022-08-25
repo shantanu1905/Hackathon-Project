@@ -86,8 +86,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'configurations.wsgi.application'
-#ASGI_APPLICATION = "configurations.asgi.application"
+#WSGI_APPLICATION = 'configurations.wsgi.application'
+ASGI_APPLICATION = "configurations.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -202,7 +202,7 @@ from datetime import timedelta
 ...
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=20),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=6),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -282,3 +282,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
  #web: gunicorn configurations.asgi --log-file -
  #web: daphne configurations.asgi:application --port $PORT --bind 0.0.0.0 -v2
  
+
+
+# celery -A [project-name] worker --loglevel=info 
+# celery -A configurations beat --loglevel=info 

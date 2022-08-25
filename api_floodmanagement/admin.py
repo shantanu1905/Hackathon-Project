@@ -60,3 +60,5 @@ class FloodMapOptions(admin.ModelAdmin):
 
 admin.site.register(FloodForcastMap , FloodMapOptions)
 admin.site.register(notification )
+admin.site.register(Tips)
+admin.site.register(FloodDataSet)

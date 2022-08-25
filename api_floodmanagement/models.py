@@ -151,3 +151,38 @@ class notification(models.Model):
         )
         print('SAVE CALLED ')
         super(notification,self).save(*args , **kwars)
+    
+
+TIPS_CATEGORY=(
+    ('All' , 'All'),
+    ('Before Flood' , 'Before FLood'),
+    ('During Flood' , 'During Flood'),
+    ('After Flood' , 'After Flood'),
+       )
+
+
+
+class Tips(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    tips_category = models.CharField(max_length=30, choices = TIPS_CATEGORY ,default = 'All')
+    image = models.ImageField(upload_to='tips/')
+
+
+
+
+class FloodDataSet(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    Site_Name = models.CharField(max_length=20)
+    River=models.CharField(max_length=20)
+    State=models.CharField(max_length=20)
+    District=models.CharField(max_length=20)
+    water_level = models.DecimalField(max_digits=10, decimal_places=5)
+    longitude = models.DecimalField(max_digits=19, decimal_places=16)
+    latitude = models.DecimalField(max_digits=19, decimal_places=16)
+
+    class Meta:
+        ordering = ['created_at']
+
+class SaftyCheck(models.Model):
+    longitude = models.DecimalField(max_digits=19, decimal_places=16)
+    latitude = models.DecimalField(max_digits=19, decimal_places=16)
