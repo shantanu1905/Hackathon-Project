@@ -62,3 +62,7 @@ admin.site.register(FloodForcastMap , FloodMapOptions)
 admin.site.register(notification )
 admin.site.register(Tips)
 admin.site.register(FloodDataSet)
+admin.site.register(SaftyCheck)
+
+admin.site.register(Inunation)
+

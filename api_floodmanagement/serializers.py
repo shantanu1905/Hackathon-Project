@@ -34,6 +34,7 @@ class MapForcastSerializer(serializers.ModelSerializer):
         fields = ['id', 'Site_Name' , 'River', 'State', 'District' , 'Day1' ,'Flood_Condition1' ,'latitude', 'longitude' ]
 
 class TipsSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField()
     class Meta:
         model = Tips
         fields = ['id','tips_category', 'image' ]
@@ -45,3 +46,7 @@ class SafeCheckSerializer(serializers.ModelSerializer):
         fields = ['latitude','longitude']
 
 
+class InundationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CrowdSource
+        fields = ['latitude','longitude']

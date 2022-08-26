@@ -186,3 +186,12 @@ class FloodDataSet(models.Model):
 class SaftyCheck(models.Model):
     longitude = models.DecimalField(max_digits=19, decimal_places=16)
     latitude = models.DecimalField(max_digits=19, decimal_places=16)
+
+
+
+class Inunation(models.Model):
+    latitude = models.DecimalField(max_digits=19, decimal_places=16)
+    longitude = models.DecimalField(max_digits=19, decimal_places=16)
+    water_level = models.DecimalField(max_digits=10, decimal_places=5)
+
+
