@@ -19,7 +19,8 @@ urlpatterns = [
     path('deletehr/<int:UserHelpRequest_id>/' ,deletehr, name='deletehr'),
     path('update/<int:UserHelpRequest_id>', update, name='update'),
     path('update/updaterecord/<int:UserHelpRequest_id>', updaterecord, name='updaterecord'),
-
+    path('msgpage/', msgpage, name='msgpage'),
+    
     path('msgbroadcast/<int:msg_id>', msgupdate, name='msgupdate'),
     path('msgbroadcast/msgbroadcastupdate/<int:msg_id>', msgupdatepage, name='msgupdatepage'),
 

@@ -1,0 +1,33 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+
+<div class="btn-group shadow-0" role="group">
+ 
+  <a type="button"  href="{% url 'flood:home' %}" class="btn btn-link" data-mdb-color="dark">Home</a>
+  <a type="button"  href="{% url 'flood:home' %}" class="btn btn-link" data-mdb-color="dark">Back to Admin</a>
+
+
+</div>
+
+
+
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Message broadcast Sent at : {{msgdata.msg}} </h5>
+     
+      <form action="{% url 'flood:msgupdate' msgdata.id %}"
+      method="post" class="d-inline">{% csrf_token %}
+      <input type="submit" class="btn btn-info btn-sm" value="Update">
+      </form></td>
+      
+
+
+
+
+
+
+
+{% endblock %}
