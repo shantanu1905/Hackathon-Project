@@ -195,3 +195,6 @@ class Inunation(models.Model):
     water_level = models.DecimalField(max_digits=10, decimal_places=5)
 
 
+class MsgBroadcast(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    msg =  models.TextField(max_length=100)

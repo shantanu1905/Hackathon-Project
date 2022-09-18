@@ -1,0 +1,44 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+
+
+<div class="btn-group shadow-0" role="group">
+ 
+  <a type="button"  href="{% url 'flood:home' %}" class="btn btn-link" data-mdb-color="dark">Home</a>
+  <a type="button"  href="{% url 'flood:home' %}" class="btn btn-link" data-mdb-color="dark">Back to Admin</a>
+
+
+</div>
+
+
+<form action="msgbroadcastupdate/{{ msgdata.id }}" method="post">
+    {% csrf_token %}
+
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Message broadcast Sent at : {{msgdata.created_at}} </h5>
+      <h5 class="card-title">Your Message : <p style ="color: Red ">{{msgdata.msg}}</p> </h5>
+      <p class="card-text">
+        
+        <input class="form-select" aria-label="Default select example" name="msgstatus">
+            
+ 
+
+      </p>
+      <button type="Submit" class="btn btn-primary">Update</button>
+    </div>
+  </div>
+
+</form>
+
+
+
+
+
+
+
+
+
+{% endblock %}

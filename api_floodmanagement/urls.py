@@ -14,6 +14,8 @@ path('tips/', Tips.as_view() , name='Tips'),      #to GET Tips Data for Do's and
 path('saftycheck/', saftycheck.as_view() , name='saftycheck'),      #to GET Tips Data for Do's and Don'ts
 path('test/', calculatedistance , name='calculatedistance'),      #to GET Tips Data for Do's and Don'ts
 path('inundation/' , Inundation.as_view() ,  name='Inundation'),
+path('broadcast/' , MsgBroadcast.as_view() ,  name='MsgBroadcast'),    
+
 
 
 

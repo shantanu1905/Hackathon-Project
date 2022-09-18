@@ -20,6 +20,10 @@ urlpatterns = [
     path('update/<int:UserHelpRequest_id>', update, name='update'),
     path('update/updaterecord/<int:UserHelpRequest_id>', updaterecord, name='updaterecord'),
 
+    path('msgbroadcast/<int:msg_id>', msgupdate, name='msgupdate'),
+    path('msgbroadcast/msgbroadcastupdate/<int:msg_id>', msgupdatepage, name='msgupdatepage'),
+
+
     path('route',  routefinder, name='routefinder'),
 
 ]

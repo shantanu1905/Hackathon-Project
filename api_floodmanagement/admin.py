@@ -65,4 +65,6 @@ admin.site.register(FloodDataSet)
 admin.site.register(SaftyCheck)
 
 admin.site.register(Inunation)
+admin.site.register(MsgBroadcast)
+
 

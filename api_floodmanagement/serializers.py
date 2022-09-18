@@ -50,3 +50,11 @@ class InundationSerializer(serializers.ModelSerializer):
     class Meta:
         model = CrowdSource
         fields = ['latitude','longitude']
+
+
+
+class MsgBroadcastSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = MsgBroadcast
+        fields = ['id','created_at', 'msg' ]

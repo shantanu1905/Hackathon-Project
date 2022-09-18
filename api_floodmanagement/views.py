@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.generics import (CreateAPIView,ListCreateAPIView,RetrieveUpdateDestroyAPIView, )
 from api_floodmanagement.models import *
-from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer , MapForcastSerializer , TipsSerializer , SafeCheckSerializer , InundationSerializer
+from api_floodmanagement.serializers import HelpSerializer , CrowdSourceSerializer , ForcastSerializer , MapForcastSerializer , TipsSerializer , SafeCheckSerializer , InundationSerializer , MsgBroadcastSerializer
 #from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 #import geopy # used for extracting longitude and latitude from location name
@@ -171,3 +171,9 @@ class Inundation(ListCreateAPIView):
 
 
     
+
+class MsgBroadcast(ListCreateAPIView):
+# With this endpoint we can do GET request to GET Tips data .
+    queryset = MsgBroadcast.objects.all()
+    serializer_class = MsgBroadcastSerializer
+    permission_classes = []

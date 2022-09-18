@@ -163,7 +163,24 @@ def routefinder(request):
 
 
 
+#Update function for MsgBroadcast data
+def msgupdate(request, msg_id):
+  msgdata = MsgBroadcast.objects.get(pk=msg_id)
+  context = {
+    'msgdata': msgdata,
+  }
+  return render(request , "flood/msgupdate.html" , context)
 
+#Update function for Help data
+def msgupdatepage(request, msg_id):
+  msgstatus = request.POST['msgstatus']
+
+  msgdata = MsgBroadcast.objects.get(pk=msg_id)
+  msgdata.msg = msgstatus
+  msgdata.save()
+  messages.success(request, 'Msg Updated Successfullly')
+  return render(request , "flood/msgupdate.html")
+  
 
 
 
