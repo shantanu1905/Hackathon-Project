@@ -49,7 +49,7 @@
 | S.No. | Branch Name                                                                             | Purpose                       |
 | ----- | --------------------------------------------------------------------------------------- | ----------------------------- |
 | 1.    | [master](https://github.com/shantanu1905/Hackathon-Project/tree/master)                 | contains all backend code     |
-| 1.    | [master]()                                                                              | contains all Frontend code    |
+| 2.    | [master](https://github.com/sam-79/Hackathon-Project)                                   | contains all Frontend code    |
 
 
 ### Backend Setup Instructions
